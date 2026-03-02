@@ -90,6 +90,7 @@ CRONUX-CRX/
 ### Requisitos
 - Python 3.8+
 - tkinter (incluido en Python)
+- Flet
 - PyInstaller (para crear ejecutables)
 
 ### Construir desde el código fuente
