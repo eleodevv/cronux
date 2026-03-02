@@ -118,13 +118,11 @@ C:\Program Files\Cronux\uninstall.bat
 sudo /usr/local/cronux/uninstall.sh
 ```
 
-## 📝 Licencia
+## Licencia
 
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
+## Sitio Web
+https://eleowebcoding.github.io/cronux-web/
 
-
-## 🌐 Sitio Web
-
-Visita nuestro sitio web para más información: [cronux-crx.com](https://cronux-crx.com)
 
