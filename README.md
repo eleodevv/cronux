@@ -124,6 +124,6 @@ sudo /usr/local/cronux/uninstall.sh
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ## Sitio Web
-https://eleowebcoding.github.io/cronux-web/
+https://cronux.netlify.app/
 
 
