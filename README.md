@@ -2,11 +2,11 @@
 
 Sistema de Control de Versiones Local Simple y Poderoso
 
-## 📋 Descripción
+## Descripción
 
 Cronux-CRX (Cronux Control de Revisiones eXtendido) es un sistema de control de versiones local diseñado para ser simple, rápido y efectivo. Funciona completamente offline, sin necesidad de repositorios remotos o configuraciones complejas.
 
-## ✨ Características
+## Características
 
 - **100% Offline**: Funciona completamente sin conexión a internet
 - **Interfaz Gráfica y CLI**: Dos formas de trabajar según tu preferencia
@@ -15,7 +15,7 @@ Cronux-CRX (Cronux Control de Revisiones eXtendido) es un sistema de control de 
 - **Historial Visual**: Visualiza la evolución de tus proyectos
 - **Restauración Fácil**: Vuelve a cualquier versión anterior con un clic
 
-## 🚀 Instalación
+## Instalación
 
 ### Windows
 1. Descarga `CRONUX-CLI-INSTALLER.exe` o `CRONUX-CRX.exe` (GUI)
@@ -33,7 +33,7 @@ Cronux-CRX (Cronux Control de Revisiones eXtendido) es un sistema de control de 
 3. Para CLI: El comando `crx` estará disponible globalmente
 4. Para GUI: Busca "Cronux-CRX" en tu menú de aplicaciones
 
-## 📖 Uso Básico
+## Uso Básico
 
 ### CLI (Línea de Comandos)
 
@@ -63,7 +63,7 @@ crx delete nombre-proyecto
 2. Crea un nuevo proyecto o abre uno existente
 3. Usa los botones para guardar versiones, ver historial y restaurar
 
-## 🗂️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 CRONUX-CRX/
@@ -85,7 +85,7 @@ CRONUX-CRX/
 └── README.md
 ```
 
-## 🛠️ Desarrollo
+## Desarrollo
 
 ### Requisitos
 - Python 3.8+
@@ -106,7 +106,7 @@ pip install pyinstaller
 python build_separated.py
 ```
 
-## 🗑️ Desinstalación
+## Desinstalación
 
 ### Windows
 ```cmd
@@ -122,23 +122,9 @@ sudo /usr/local/cronux/uninstall.sh
 
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
-## 👥 Contribuciones
 
-Las contribuciones son bienvenidas. Por favor:
-1. Haz fork del proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📧 Contacto
-
-Para preguntas, sugerencias o reportar problemas, por favor abre un issue en GitHub.
 
 ## 🌐 Sitio Web
 
 Visita nuestro sitio web para más información: [cronux-crx.com](https://cronux-crx.com)
 
----
-
-Hecho con ❤️ para la comunidad de desarrolladores
