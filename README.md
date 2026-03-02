@@ -20,4 +20,3 @@ Esta carpeta contiene las páginas estáticas del sitio web de Cronux.
 - Páginas informativas sobre Cronux
 - No requiere backend
 - Funciona con archivos estáticos
-- Enlaces a la comunidad dinámica
