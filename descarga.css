@@ -560,6 +560,21 @@ main {
     color: rgba(255,255,255,0.6);
 }
 
+.menu-guide {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    background: rgba(139,92,246,0.05);
+    gap: 8px;
+}
+
+.menu-guide i {
+    width: 16px;
+    height: 16px;
+}
+
+.menu-guide:hover {
+    background: rgba(139,92,246,0.2);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .container {
