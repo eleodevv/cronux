@@ -562,17 +562,23 @@ main {
 
 .menu-guide {
     border-top: 1px solid rgba(255,255,255,0.1);
-    background: rgba(139,92,246,0.05);
+    background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(22,163,74,0.12));
+    border: 1px solid rgba(34,197,94,0.3);
     gap: 8px;
+    font-weight: 600;
+    color: rgb(34,197,94) !important;
 }
 
 .menu-guide i {
     width: 16px;
     height: 16px;
+    color: rgb(34,197,94);
 }
 
 .menu-guide:hover {
-    background: rgba(139,92,246,0.2);
+    background: linear-gradient(135deg, rgba(34,197,94,0.25), rgba(22,163,74,0.2));
+    border-color: rgba(34,197,94,0.4);
+    transform: translateX(-2px);
 }
 
 /* Responsive */
