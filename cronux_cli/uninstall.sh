@@ -1,41 +1,21 @@
 #!/bin/bash
-# Cronux-CRX Uninstaller v0.1.0 Beta
+# CRONUX-CRX CLI Uninstaller for Linux/macOS
 
-echo "Cronux-CRX Uninstaller"
-echo ""
-echo "Esto eliminará:"
-echo "  - El comando 'crx' del sistema"
-echo "  - Todos los archivos de Cronux-CRX"
-echo ""
-echo "Nota: Tus proyectos NO serán eliminados"
-echo ""
-read -p "Continuar? (si/no): " confirm
+set -e
 
-if [ "$confirm" != "si" ]; then
-    echo "Desinstalación cancelada"
-    exit 0
+INSTALL_DIR="/usr/local/cronux"
+BIN_DIR="/usr/local/bin"
+
+echo ""
+echo "  Desinstalando CRONUX-CRX CLI..."
+
+if [ -L "$BIN_DIR/cronux" ]; then
+    sudo rm -f "$BIN_DIR/cronux"
 fi
 
-echo ""
-echo "Desinstalando Cronux-CRX..."
-
-# Eliminar archivos
-sudo rm -rf /usr/local/cronux
-sudo rm -f /usr/local/bin/crx
-
-# Eliminar recibo del paquete
-sudo pkgutil --forget com.cronux.crx 2>/dev/null || true
-
-# Verificar
-echo ""
-if command -v crx &> /dev/null; then
-    echo "El comando 'crx' aún está disponible"
-    echo "Reinicia tu terminal para aplicar cambios"
-else
-    echo "Cronux-CRX desinstalado correctamente"
+if [ -d "$INSTALL_DIR" ]; then
+    sudo rm -rf "$INSTALL_DIR"
 fi
 
-echo ""
-echo "Tus proyectos con carpetas .cronux NO fueron eliminados"
-echo "Reinicia tu terminal para aplicar cambios"
+echo "  ✓ CRONUX-CRX CLI desinstalado correctamente"
 echo ""

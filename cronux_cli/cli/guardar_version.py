@@ -4,6 +4,56 @@ import json
 from datetime import datetime
 import shutil
 
+# Exclusiones por tipo de proyecto
+EXCLUSIONES_POR_TIPO = {
+    "nodejs": [
+        "node_modules", ".npm", "npm-debug.log", "yarn-error.log",
+        ".pnpm-store", ".yarn"
+    ],
+    "python": [
+        "__pycache__", "*.pyc", "*.pyo", "*.pyd", ".Python",
+        "venv", "env", ".venv", ".env", "ENV", "env.bak", "venv.bak",
+        "*.egg-info", "dist", "build", ".pytest_cache", ".mypy_cache"
+    ],
+    "java_maven": [
+        "target", ".mvn", "mvnw", "mvnw.cmd", ".classpath", ".project",
+        ".settings", "*.class", "*.jar", "*.war"
+    ],
+    "java_gradle": [
+        "build", ".gradle", "gradle", "gradlew", "gradlew.bat",
+        ".classpath", ".project", ".settings", "*.class", "*.jar", "*.war"
+    ],
+    "php": [
+        "vendor", "composer.lock", ".phpunit.result.cache"
+    ],
+    "ruby": [
+        "vendor/bundle", ".bundle", "*.gem", ".rspec"
+    ],
+    "dotnet": [
+        "bin", "obj", "*.dll", "*.exe", "*.pdb", ".vs", "packages"
+    ],
+    "go": [
+        "vendor", "*.exe", "*.test", "*.out"
+    ],
+    "general": []
+}
+
+def debe_excluir(item_name, tipo_proyecto):
+    """Verifica si un archivo/carpeta debe ser excluido según el tipo de proyecto"""
+    exclusiones = EXCLUSIONES_POR_TIPO.get(tipo_proyecto, [])
+    
+    for patron in exclusiones:
+        if patron.startswith("*"):
+            # Patrón de extensión
+            if item_name.endswith(patron[1:]):
+                return True
+        else:
+            # Nombre exacto
+            if item_name == patron:
+                return True
+    
+    return False
+
 def calcular_tamaño_directorio(directorio):
     """Calcula el tamaño total de un directorio en bytes"""
     tamaño_total = 0
@@ -26,12 +76,21 @@ def formatear_tamaño(bytes_size):
     else:
         return f"{bytes_size / (1024 * 1024 * 1024):.1f} GB"
 
-def guardar_version_cli(mensaje):
-    """Versión CLI que recibe el mensaje como parámetro"""
+def guardar_version_cli(mensaje, callback_progreso=None):
+    """Versión CLI que recibe el mensaje como parámetro y opcionalmente un callback de progreso"""
     # Verificar que estamos en el proyecto cronux
     if not verificarCronux():
         print("ERROR: No estas en un proyecto Cronux")
         return False
+
+    # Leer tipo de proyecto
+    tipo_proyecto = "general"
+    try:
+        with open(obtener_ruta_cronux() / "proyecto.json", "r") as f:
+            datos = json.load(f)
+            tipo_proyecto = datos.get("tipo", "general")
+    except:
+        pass
 
     # Determinar número de la versión
     numero_version = determinar_numero_version()
@@ -44,22 +103,42 @@ def guardar_version_cli(mensaje):
     carpeta_version = carpeta_versiones / f"version_{numero_version}"
     carpeta_version.mkdir(exist_ok=True)
 
-    # Copiar todos los archivos del directorio actual (excepto .cronux)
+    # Copiar todos los archivos del directorio actual (excepto .cronux y exclusiones)
     directorio_actual = Path.cwd()
     
     archivos_copiados = 0
+    archivos_excluidos = 0
+    
+    if callback_progreso:
+        callback_progreso("📂 Analizando archivos del proyecto...")
+    
     for item in directorio_actual.iterdir():
-        if item.name != ".cronux" and not item.name.startswith('.'):
-            destino = carpeta_version / item.name
-            try:
-                if item.is_file():
-                    shutil.copy2(item, destino)
-                    archivos_copiados += 1
-                elif item.is_dir():
-                    shutil.copytree(item, destino)
-                    archivos_copiados += 1
-            except Exception as e:
-                print(f"Advertencia: No se pudo copiar {item.name}: {e}")
+        if item.name == ".cronux" or item.name.startswith('.git'):
+            continue
+        
+        # Verificar exclusiones por tipo de proyecto
+        if debe_excluir(item.name, tipo_proyecto):
+            archivos_excluidos += 1
+            if callback_progreso:
+                callback_progreso(f"  ⊗ Excluyendo: {item.name}")
+            continue
+        
+        destino = carpeta_version / item.name
+        try:
+            if callback_progreso:
+                callback_progreso(f"  ✓ Guardando: {item.name}")
+            
+            if item.is_file():
+                shutil.copy2(item, destino)
+                archivos_copiados += 1
+            elif item.is_dir():
+                shutil.copytree(item, destino)
+                archivos_copiados += 1
+        except Exception as e:
+            error_msg = f"No se pudo copiar {item.name}: {e}"
+            print(f"Advertencia: {error_msg}")
+            if callback_progreso:
+                callback_progreso(f"⚠ {error_msg}")
 
     # Calcular tamaño de la versión
     tamaño_bytes = calcular_tamaño_directorio(carpeta_version)
@@ -70,7 +149,9 @@ def guardar_version_cli(mensaje):
         "version": numero_version,
         "fecha": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "mensaje": mensaje or "Sin mensaje",
+        "tipo_proyecto": tipo_proyecto,
         "archivos_guardados": archivos_copiados,
+        "archivos_excluidos": archivos_excluidos,
         "tamaño_bytes": tamaño_bytes,
         "tamaño_formateado": tamaño_formateado
     }
@@ -80,10 +161,8 @@ def guardar_version_cli(mensaje):
     with open(archivo_metadatos, "w") as f:
         json.dump(metadatos, f, indent=2)
 
-    print(f"[OK] Version {numero_version} guardada")
-    print(f"Mensaje: {metadatos['mensaje']}")
-    print(f"Archivos guardados: {archivos_copiados}")
-    print(f"Tamaño del proyecto: {tamaño_formateado}")
-    print(f"Fecha: {metadatos['fecha']}")
+    print(f"\n  ✓  Versión {numero_version} guardada")
+    print(f"  ●  Mensaje:  {metadatos['mensaje']}")
+    print(f"  ●  Archivos: {archivos_copiados}  |  Tamaño: {tamaño_formateado}\n")
     
     return True

@@ -1,0 +1,300 @@
+name: Build & Release CRONUX-CRX
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g. v0.2.0)'
+        required: true
+        default: 'v0.2.0'
+
+jobs:
+
+  # ── Linux: .deb CLI + GUI ──────────────────────────────
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install flet pyinstaller
+          sudo apt-get install -y dpkg-dev
+
+      - name: Build CLI .deb
+        run: |
+          VERSION="${{ github.ref_name || github.event.inputs.version }}"
+          VERSION="${VERSION#v}"
+
+          # Estructura del paquete .deb
+          mkdir -p deb-cli/DEBIAN
+          mkdir -p deb-cli/usr/local/cronux/cli
+          mkdir -p deb-cli/usr/local/bin
+
+          # Copiar archivos CLI
+          cp cronux_cli/cli/*.py deb-cli/usr/local/cronux/cli/
+
+          # Script ejecutable
+          cat > deb-cli/usr/local/cronux/cronux << 'EOF'
+          #!/bin/bash
+          python3 /usr/local/cronux/cli/cronux_cli.py "$@"
+          EOF
+          chmod +x deb-cli/usr/local/cronux/cronux
+          ln -sf /usr/local/cronux/cronux deb-cli/usr/local/bin/cronux
+
+          # Control file
+          cat > deb-cli/DEBIAN/control << EOF
+          Package: cronux-crx-cli
+          Version: ${VERSION}
+          Architecture: all
+          Maintainer: CRONUX-CRX <contact@cronux.dev>
+          Description: CRONUX-CRX CLI - Control de Versiones Local
+          Depends: python3
+          EOF
+
+          dpkg-deb --build deb-cli "cronux-crx-cli_${VERSION}_all.deb"
+
+      - name: Build GUI .deb
+        run: |
+          VERSION="${{ github.ref_name || github.event.inputs.version }}"
+          VERSION="${VERSION#v}"
+
+          # Build GUI con PyInstaller
+          python -m PyInstaller \
+            --onefile \
+            --windowed \
+            --name "cronux-crx-gui" \
+            --add-data "cronux_cli/assets:assets" \
+            --clean \
+            cronux_cli/ui/cronux_ui_v2.py
+
+          # Estructura del paquete .deb
+          mkdir -p deb-gui/DEBIAN
+          mkdir -p deb-gui/usr/local/bin
+          mkdir -p deb-gui/usr/share/applications
+          mkdir -p deb-gui/usr/share/icons/hicolor/256x256/apps
+
+          # Copiar ejecutable
+          cp dist/cronux-crx-gui deb-gui/usr/local/bin/
+          chmod +x deb-gui/usr/local/bin/cronux-crx-gui
+
+          # Copiar icono
+          if [ -f cronux_cli/assets/hexagon_logo_256.png ]; then
+            cp cronux_cli/assets/hexagon_logo_256.png deb-gui/usr/share/icons/hicolor/256x256/apps/cronux-crx.png
+          fi
+
+          # Desktop entry
+          cat > deb-gui/usr/share/applications/cronux-crx.desktop << EOF
+          [Desktop Entry]
+          Name=CRONUX-CRX
+          Comment=Control de Versiones Local
+          Exec=/usr/local/bin/cronux-crx-gui
+          Icon=cronux-crx
+          Terminal=false
+          Type=Application
+          Categories=Development;
+          EOF
+
+          # Control file
+          cat > deb-gui/DEBIAN/control << EOF
+          Package: cronux-crx-gui
+          Version: ${VERSION}
+          Architecture: amd64
+          Maintainer: CRONUX-CRX <contact@cronux.dev>
+          Description: CRONUX-CRX GUI - Control de Versiones Local (Interfaz Gráfica)
+          Depends: python3
+          EOF
+
+          dpkg-deb --build deb-gui "cronux-crx-gui_${VERSION}_amd64.deb"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: "*.deb"
+
+  # ── macOS: .pkg CLI + .dmg GUI ────────────────────────
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install flet pyinstaller
+
+      - name: Build CLI .pkg
+        run: |
+          VERSION="${{ github.ref_name || github.event.inputs.version }}"
+          VERSION="${VERSION#v}"
+
+          mkdir -p pkg-root/usr/local/cronux/cli
+          mkdir -p pkg-root/usr/local/bin
+
+          cp cronux_cli/cli/*.py pkg-root/usr/local/cronux/cli/
+
+          cat > pkg-root/usr/local/cronux/cronux << 'EOF'
+          #!/bin/bash
+          python3 /usr/local/cronux/cli/cronux_cli.py "$@"
+          EOF
+          chmod +x pkg-root/usr/local/cronux/cronux
+          ln -sf /usr/local/cronux/cronux pkg-root/usr/local/bin/cronux
+
+          pkgbuild \
+            --root pkg-root \
+            --identifier dev.cronux.cli \
+            --version "${VERSION}" \
+            "Cronux-CRX-CLI-Installer.pkg"
+
+      - name: Build GUI .app
+        run: |
+          python -m PyInstaller \
+            --onefile \
+            --windowed \
+            --name "CRONUX-CRX" \
+            --add-data "cronux_cli/assets:assets" \
+            --icon "cronux_cli/assets/cronux_cli.icns" \
+            --clean \
+            cronux_cli/ui/cronux_ui_v2.py
+
+      - name: Create .dmg
+        run: |
+          VERSION="${{ github.ref_name || github.event.inputs.version }}"
+          VERSION="${VERSION#v}"
+
+          # Crear carpeta temporal para el DMG
+          mkdir -p dmg-temp
+          cp -r "dist/CRONUX-CRX.app" dmg-temp/
+
+          # Crear DMG
+          hdiutil create -volname "CRONUX-CRX" -srcfolder dmg-temp -ov -format UDZO "CRONUX-CRX-${VERSION}.dmg"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-packages
+          path: |
+            *.pkg
+            *.dmg
+
+  # ── Windows: .exe CLI Installer + GUI ──────────────────
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install flet pyinstaller
+
+      - name: Build CLI Installer .exe
+        run: |
+          python -m PyInstaller `
+            --onefile `
+            --windowed `
+            --name "CRONUX-CLI-INSTALLER" `
+            --add-data "cronux_cli/cli;cli" `
+            --add-data "cronux_cli/assets;assets" `
+            --icon "cronux_cli/assets/cronux_cli.png" `
+            --clean `
+            cronux_cli/installer_windows_cli.py
+
+      - name: Build GUI .exe
+        run: |
+          python -m PyInstaller `
+            --onefile `
+            --windowed `
+            --name "CRONUX-CRX" `
+            --add-data "cronux_cli/assets;assets" `
+            --icon "cronux_cli/assets/cronux_cli.png" `
+            --clean `
+            cronux_cli/ui/cronux_ui_v2.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-packages
+          path: dist/*.exe
+
+  # ── Release ────────────────────────────────────────────
+  release:
+    needs: [build-linux, build-macos, build-windows]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "CRONUX-CRX ${{ github.ref_name }}"
+          body: |
+            ## CRONUX-CRX ${{ github.ref_name }}
+
+            ### 🚀 Instalación rápida (CLI)
+
+            **Linux/macOS:**
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/eleodevv/CRONUX-CRX/${{ github.ref_name }}/cronux_cli/install.sh | bash
+            ```
+
+            **Windows (PowerShell como Admin):**
+            ```powershell
+            irm https://raw.githubusercontent.com/eleodevv/CRONUX-CRX/${{ github.ref_name }}/cronux_cli/install.ps1 | iex
+            ```
+
+            ### 📦 Descargas
+
+            **CLI (Línea de comandos):**
+            - `CRONUX-CLI-INSTALLER.exe` — Windows Installer
+            - `cronux-crx-cli_*_all.deb` — Linux (Debian/Ubuntu)
+            - `Cronux-CRX-CLI-Installer.pkg` — macOS
+
+            **GUI (Interfaz gráfica):**
+            - `CRONUX-CRX.exe` — Windows
+            - `cronux-crx-gui_*_amd64.deb` — Linux (Debian/Ubuntu)
+            - `CRONUX-CRX-*.dmg` — macOS
+
+            ### 🗑️ Desinstalar
+
+            **Linux/macOS:**
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/eleodevv/CRONUX-CRX/${{ github.ref_name }}/cronux_cli/uninstall.sh | bash
+            ```
+
+            **Windows (PowerShell como Admin):**
+            ```powershell
+            irm https://raw.githubusercontent.com/eleodevv/CRONUX-CRX/${{ github.ref_name }}/cronux_cli/uninstall.ps1 | iex
+            ```
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.deb
+            artifacts/**/*.pkg
+            artifacts/**/*.dmg
+            cronux_cli/install.sh
+            cronux_cli/install.ps1
+            cronux_cli/uninstall.sh
+            cronux_cli/uninstall.ps1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
