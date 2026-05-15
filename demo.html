@@ -3,197 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Interactivo - CRONUX-CRX</title>
+    <title>Demo - CRONUX-CRX</title>
     <link rel="stylesheet" href="demo.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
-    <!-- Back to Home Button -->
-    <a href="index.html" class="back-to-home">
-        <i data-lucide="arrow-left"></i>
-        Volver al inicio
-    </a>
 
-    <!-- Pantalla de Inicio -->
-    <div id="homeScreen" class="screen">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <img src="svg/hexagon_logo.svg" class="logo-icon" width="32" height="32" alt="CRONUX-CRX">
-                    <span class="logo-text">CRONUX-CRX</span>
-                </div>
-                <div class="header-actions">
-                    <button class="icon-btn" id="themeToggle" title="Cambiar tema">
-                        <i data-lucide="sun" id="themeIcon"></i>
-                    </button>
-                    <button class="icon-btn" id="importBtn" title="Importar proyecto">
-                        <i data-lucide="upload"></i>
-                    </button>
-                    <button class="icon-btn" id="cleanBtn" title="Limpiar lista">
-                        <i data-lucide="trash-2"></i>
-                    </button>
-                </div>
+<!-- HOME -->
+<div id="homeScreen" class="screen">
+    <header class="hdr">
+        <div class="hdr-logo">
+            <div class="logo-box">
+                <svg width="24" height="24" viewBox="0 0 100 100">
+                    <rect width="100" height="100" rx="28" fill="#667EEA"/>
+                    <polygon points="50,22 72,34 72,66 50,78 28,66 28,34" fill="white"/>
+                </svg>
             </div>
-        </header>
-
-        <!-- Empty State -->
+            <span class="logo-txt">CRONUX-CRX</span>
+        </div>
+        <div class="hdr-actions">
+            <button class="btn-ghost" onclick="app.cleanProjects()">Limpiar proyectos deprecados</button>
+            <button class="btn-outline" onclick="app.toast('Selecciona una carpeta')">
+                <i data-lucide="folder-open"></i> Abrir
+            </button>
+            <button class="btn-primary" onclick="app.showWizard()">
+                <i data-lucide="rocket"></i> Nuevo
+            </button>
+        </div>
+    </header>
+    <div class="home-body">
         <div id="emptyState" class="empty-state">
-            <img src="svg/hexagon_logo.svg" class="empty-logo" width="120" height="120" alt="CRONUX-CRX">
+            <div class="empty-circle"><i data-lucide="folder-open"></i></div>
             <h2>No hay proyectos</h2>
-            <p>Comienza creando un nuevo proyecto o abre uno existente</p>
-            <div class="empty-actions">
-                <button class="btn-primary" id="createProjectBtn">
-                    <i data-lucide="plus"></i>
-                    Crear proyecto
-                </button>
-                <button class="btn-secondary" id="openProjectBtn">
-                    <i data-lucide="folder-open"></i>
-                    Abrir proyecto
-                </button>
-            </div>
+            <p>Crea tu primer proyecto para comenzar</p>
+            <button class="btn-primary lg" onclick="app.showWizard()">
+                <i data-lucide="rocket"></i> Crear Primer Proyecto
+            </button>
         </div>
-
-        <!-- Projects List -->
-        <div id="projectsList" class="projects-container" style="display: none;">
-            <div class="toolbar">
-                <div class="toolbar-header">
-                    <span class="toolbar-title">Proyectos</span>
-                    <div class="toolbar-actions">
-                        <button class="btn-primary-small" id="newProjectBtn">
-                            <i data-lucide="plus"></i>
-                            Nuevo
-                        </button>
-                        <button class="btn-secondary-small" id="openProjectBtn2">
-                            <i data-lucide="folder-open"></i>
-                            Abrir
-                        </button>
-                    </div>
-                </div>
-                <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Buscar proyectos..." class="search-input">
+        <div id="projectsSection" style="display:none">
+            <div class="list-hdr">
+                <span class="list-title">Proyectos</span>
+                <div class="search-box">
+                    <i data-lucide="search"></i>
+                    <input id="searchInput" type="text" placeholder="Buscar proyectos..." oninput="app.search(this.value)">
                 </div>
             </div>
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Projects will be loaded here -->
-            </div>
+            <div id="projectsList"></div>
         </div>
     </div>
+</div>
 
-    <!-- Project View Screen -->
-    <div id="projectScreen" class="screen" style="display: none;">
-        <!-- Header -->
-        <header class="project-header">
-            <div class="project-header-content">
-                <button class="icon-btn-back" id="backBtn">
-                    <i data-lucide="arrow-left"></i>
-                </button>
-                <div class="project-title-section">
-                    <i data-lucide="folder"></i>
-                    <span id="projectTitle">Mi Proyecto</span>
-                    <button class="icon-btn-small">
-                        <i data-lucide="edit-2"></i>
-                    </button>
-                </div>
-                <div class="spacer"></div>
-                <button class="icon-btn" title="Actualizar">
-                    <i data-lucide="refresh-cw"></i>
-                </button>
-                <button class="icon-btn" title="Estadísticas">
-                    <i data-lucide="bar-chart-2"></i>
-                </button>
-                <button class="icon-btn" title="Exportar">
-                    <i data-lucide="download"></i>
-                </button>
-                <button class="btn-primary-small" id="saveVersionBtn">
-                    <i data-lucide="save"></i>
-                    Guardar versión
-                </button>
-            </div>
-        </header>
+<!-- WIZARD -->
+<div id="wizardScreen" class="screen" style="display:none">
+    <div id="wizardContent" class="wiz-wrap"></div>
+</div>
 
-        <!-- Main Content: Timeline + Details -->
-        <div class="project-content">
-            <!-- Timeline Sidebar -->
-            <aside class="timeline-sidebar">
-                <div class="timeline-container" id="timelineContainer">
-                    <!-- Timeline items will be loaded here -->
-                </div>
-            </aside>
+<!-- PROJECT -->
+<div id="projectScreen" class="screen" style="display:none">
+    <header class="proj-hdr">
+        <button class="btn-icon" onclick="app.goHome()"><i data-lucide="arrow-left"></i></button>
+        <div id="projIco" class="proj-ico-wrap"></div>
+        <div class="proj-hdr-info">
+            <span id="projName"></span>
+            <span id="projPath"></span>
+        </div>
+        <div style="flex:1"></div>
+        <button class="btn-primary" onclick="app.openModal('saveModal')">
+            <i data-lucide="save"></i> Guardar
+        </button>
+    </header>
+    <div id="projBody" class="proj-body"></div>
+    <nav class="dock">
+        <button class="dock-btn active" data-view="versiones" onclick="app.switchView('versiones')">
+            <i data-lucide="layers"></i><span>Versiones</span>
+        </button>
+        <button class="dock-btn" data-view="estadisticas" onclick="app.switchView('estadisticas')">
+            <i data-lucide="bar-chart-2"></i><span>Estadísticas</span>
+        </button>
+    </nav>
+</div>
 
-            <!-- Divider -->
-            <div class="divider"></div>
-
-            <!-- Details Panel -->
-            <main class="details-panel">
-                <div class="details-container" id="detailsContainer">
-                    <!-- Version cards will be loaded here -->
-                </div>
-            </main>
+<!-- MODAL: Guardar versión -->
+<div class="backdrop" id="saveModal" style="display:none" onclick="app.closeModalOutside(event,'saveModal')">
+    <div class="modal">
+        <div class="modal-ico" style="background:#667EEA"><i data-lucide="save"></i></div>
+        <h2>Guardar Nueva Versión</h2>
+        <div class="field"><label>Descripción de los cambios</label>
+            <textarea id="versionMsg" rows="3" placeholder="Ej: Agregué autenticación JWT..."></textarea>
+        </div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="app.closeModal()">Cancelar</button>
+            <button class="btn-primary" onclick="app.saveVersion()"><i data-lucide="check-circle"></i> Guardar</button>
         </div>
     </div>
+</div>
 
-    <!-- Modal: New Project -->
-    <div class="modal" id="newProjectModal">
-        <div class="modal-overlay" onclick="closeModal('newProjectModal')"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Crear Nuevo Proyecto</h3>
-                <button class="close-btn" onclick="closeModal('newProjectModal')">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nombre del proyecto</label>
-                    <input type="text" id="projectNameInput" placeholder="mi-proyecto">
-                </div>
-                <div class="form-group">
-                    <label>Tipo</label>
-                    <select id="projectTypeInput">
-                        <option value="software">Software</option>
-                        <option value="documentos">Documentos</option>
-                        <option value="imagenes">Imágenes</option>
-                        <option value="diseno">Diseño</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal('newProjectModal')">Cancelar</button>
-                <button class="btn-primary" id="confirmCreateBtn">Crear</button>
-            </div>
+<!-- MODAL: Restaurar -->
+<div class="backdrop" id="restoreModal" style="display:none" onclick="app.closeModalOutside(event,'restoreModal')">
+    <div class="modal">
+        <div class="modal-ico" style="background:#ED8936"><i data-lucide="rotate-ccw"></i></div>
+        <h2>Restaurar Versión</h2>
+        <p class="modal-desc" id="restoreDesc"></p>
+        <div class="modal-warn"><i data-lucide="info"></i> Los archivos actuales serán reemplazados</div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="app.closeModal()">Cancelar</button>
+            <button class="btn-orange" onclick="app.confirmAction()"><i data-lucide="rotate-ccw"></i> Restaurar</button>
         </div>
     </div>
+</div>
 
-    <!-- Modal: Save Version -->
-    <div class="modal" id="saveVersionModal">
-        <div class="modal-overlay" onclick="closeModal('saveVersionModal')"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Guardar Nueva Versión</h3>
-                <button class="close-btn" onclick="closeModal('saveVersionModal')">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea id="versionDescInput" placeholder="Describe los cambios..." rows="4"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal('saveVersionModal')">Cancelar</button>
-                <button class="btn-primary" id="confirmSaveBtn">Guardar</button>
-            </div>
+<!-- MODAL: Eliminar versión -->
+<div class="backdrop" id="delVerModal" style="display:none" onclick="app.closeModalOutside(event,'delVerModal')">
+    <div class="modal">
+        <div class="modal-ico" style="background:#EF4444"><i data-lucide="trash-2"></i></div>
+        <h2>Eliminar Versión</h2>
+        <p class="modal-desc" id="delVerDesc"></p>
+        <div class="modal-warn danger"><i data-lucide="alert-triangle"></i> Esta acción no se puede deshacer</div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="app.closeModal()">Cancelar</button>
+            <button class="btn-danger" onclick="app.confirmAction()"><i data-lucide="trash-2"></i> Eliminar</button>
         </div>
     </div>
+</div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i data-lucide="check-circle" id="toastIcon"></i>
-        <span id="toastMessage"></span>
+<!-- MODAL: Eliminar proyecto -->
+<div class="backdrop" id="delProjModal" style="display:none" onclick="app.closeModalOutside(event,'delProjModal')">
+    <div class="modal">
+        <div class="modal-ico" style="background:#EF4444"><i data-lucide="trash-2"></i></div>
+        <h2>Eliminar Proyecto</h2>
+        <p class="modal-desc" id="delProjDesc"></p>
+        <div class="modal-warn danger"><i data-lucide="alert-triangle"></i> Se eliminarán todas las versiones permanentemente</div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="app.closeModal()">Cancelar</button>
+            <button class="btn-danger" onclick="app.confirmAction()"><i data-lucide="trash-2"></i> Eliminar</button>
+        </div>
     </div>
+</div>
 
-    <script src="demo.js"></script>
+<!-- MODAL: Editar nombre -->
+<div class="backdrop" id="editNameModal" style="display:none" onclick="app.closeModalOutside(event,'editNameModal')">
+    <div class="modal">
+        <div class="modal-ico" style="background:#F59E0B"><i data-lucide="pencil"></i></div>
+        <h2>Editar nombre del proyecto</h2>
+        <div class="field"><label>Nombre del proyecto</label>
+            <input type="text" id="editNameInput">
+        </div>
+        <div class="modal-btns">
+            <button class="btn-cancel" onclick="app.closeModal()">Cancelar</button>
+            <button class="btn-yellow" onclick="app.saveEditName()"><i data-lucide="check-circle"></i> Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i data-lucide="check-circle"></i><span id="toastMsg"></span></div>
+
+<!-- BACK -->
+<a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Volver al inicio</a>
+
+<script src="demo.js"></script>
 </body>
 </html>

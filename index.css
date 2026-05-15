@@ -324,7 +324,6 @@ header {
 [data-termynal] {
     width: 100%;
     max-width: 600px;
-    max-height: 400px; /* Altura máxima para evitar scroll */
     background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
     color: #e0e0e0;
     font-family: 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', Consolas, 'Courier New', monospace;
@@ -334,8 +333,7 @@ header {
     border-radius: 12px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     position: relative;
-    overflow: hidden;
-    overflow-y: auto; /* Scroll interno si es necesario */
+    overflow: hidden; /* Sin scroll */
 }
 
 [data-termynal]:before {
@@ -395,8 +393,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 450px; /* Altura mínima fija para el contenedor */
-    max-height: 500px; /* Altura máxima para evitar scroll de página */
 }
 
 .hero-illustration {
@@ -544,7 +540,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -694,116 +690,19 @@ header {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Carousel Styles */
-.carousel-wrapper {
-    position: relative;
+/* Video Preview */
+.video-wrapper {
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.carousel-container {
-    flex: 1;
+    border-radius: 16px;
     overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-.carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.carousel-slide {
-    min-width: 100%;
-    opacity: 0.4;
-    transition: opacity 0.5s ease;
-}
-
-.carousel-slide.active {
-    opacity: 1;
-}
-
-.carousel-slide img {
+.preview-video {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 12px;
-}
-
-.carousel-btn {
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    color: #fff;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.carousel-btn:hover {
-    background: rgba(139, 92, 246, 0.4);
-    border-color: rgba(139, 92, 246, 0.5);
-    transform: scale(1.1);
-}
-
-.carousel-btn i {
-    width: 24px;
-    height: 24px;
-}
-
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 1.5rem;
-}
-
-.indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-}
-
-.indicator:hover {
-    background: rgba(255, 255, 255, 0.5);
-    transform: scale(1.2);
-}
-
-.indicator.active {
-    background: rgba(139, 92, 246, 1);
-    width: 28px;
-    border-radius: 5px;
-}
-
-.interface-preview-image {
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.preview-screenshot {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-}
-
-.interface-preview-container:hover .preview-screenshot {
-    transform: scale(1.02);
+    border-radius: 16px;
 }
 
 /* Responsive para la sección de interfaz */
@@ -945,7 +844,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -1433,7 +1332,7 @@ header {
 }
 
 .primary-button:hover {
-    background: #5855eb;
+    background: #4f46e5;
     transform: translateY(-1px);
 }
 

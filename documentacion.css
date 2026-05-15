@@ -27,7 +27,7 @@ body {
 /* Variables CSS */
 :root {
     --primary-color: #6366f1;
-    --primary-hover: #5855eb;
+    --primary-hover: #6366f1;
     --secondary-color: #a1a1aa;
     --accent-color: #10b981;
     --success-color: #10b981;
@@ -249,7 +249,7 @@ header {
 }
 
 .primary-button:hover {
-    background: #5855eb;
+    background: #6366f1;
     transform: translateY(-2px);
 }
 
@@ -888,7 +888,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;

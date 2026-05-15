@@ -22,8 +22,9 @@
     <header>
         <div class="navegacion">
             <div class="logo">
-                <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M16 2L26 8V24L16 30L6 24V8L16 2Z" fill="currentColor" />
+                <svg class="logo-icon" width="32" height="32" viewBox="0 0 100 100">
+                    <rect width="100" height="100" rx="28" ry="28" fill="#667EEA"/>
+                    <polygon points="50,22 72,34 72,66 50,78 28,66 28,34" fill="white"/>
                 </svg>
                 <div class="logo-text">Cronux-CRX</div>
             </div>
@@ -60,16 +61,21 @@
                 <div class="hero-illustration">
                     <!-- Terminal animada con termynal.js -->
                     <div id="termynal" data-termynal data-ty-typeDelay="40" data-ty-lineDelay="700">
-                        <span data-ty="input">crx new mi-proyecto</span>
-                        <span data-ty>✓ Proyecto inicializado</span>
-                        <span data-ty>ID: 1.0</span>
-                        <span data-ty="input">crx save -m "nueva funcionalidad"</span>
-                        <span data-ty>✓ Versión guardada: 1.1</span>
-                        <span data-ty="input">crx log</span>
-                        <span data-ty>1.1 - nueva funcionalidad</span>
-                        <span data-ty>1.0 - Proyecto inicializado</span>
-                        <span data-ty="input">crx restore 1.0</span>
-                        <span data-ty>✓ Restaurado a 1.0</span>
+                        <span data-ty data-ty-delay="0" style="color:#67e8f9;font-family:monospace;font-size:0.72em;line-height:1.3;white-space:pre">  ██████╗██████╗  ██████╗ ███╗  ██╗██╗   ██╗██╗  ██╗</span>
+                        <span data-ty data-ty-delay="0" style="color:#67e8f9;font-family:monospace;font-size:0.72em;line-height:1.3;white-space:pre"> ██╔════╝██╔══██╗██╔═══██╗████╗ ██║██║   ██║╚██╗██╔╝</span>
+                        <span data-ty data-ty-delay="0" style="color:#67e8f9;font-family:monospace;font-size:0.72em;line-height:1.3;white-space:pre"> ██║     ██████╔╝██║   ██║██╔██╗██║██║   ██║ ╚███╔╝ </span>
+                        <span data-ty data-ty-delay="0" style="color:#67e8f9;font-family:monospace;font-size:0.72em;line-height:1.3;white-space:pre"> ██║     ██╔══██╗██║   ██║██║╚████║██║   ██║ ██╔██╗ </span>
+                        <span data-ty data-ty-delay="0" style="color:#67e8f9;font-family:monospace;font-size:0.72em;line-height:1.3;white-space:pre"> ╚██████╗██║  ██║╚██████╔╝██║ ╚███║╚██████╔╝██╔╝╚██╗</span>
+                        <span data-ty data-ty-delay="0" style="color:#67e8f9;font-family:monospace;font-size:0.72em;line-height:1.3;white-space:pre">  ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚══╝ ╚═════╝ ╚═╝  ╚═╝</span>
+                        <span data-ty data-ty-delay="0" style="color:#6b7280;font-family:monospace;font-size:0.72em">             Control de Versiones  v0.2.1</span>
+                        <span data-ty="input">cronux crear mi-proyecto</span>
+                        <span data-ty>  ✓  Proyecto mi-proyecto creado</span>
+                        <span data-ty="input">cronux guardar "primera versión"</span>
+                        <span data-ty>  ✓  Versión 1 guardada</span>
+                        <span data-ty="input">cronux historial</span>
+                        <span data-ty>  v1  Hace un momento  primera versión</span>
+                        <span data-ty="input">cronux restaurar v1</span>
+                        <span data-ty>  ✓  Versión v1 restaurada</span>
                     </div>
                 </div>
             </div>
@@ -143,35 +149,15 @@
                 </p>
 
                 <div class="interface-preview-container">
-                    <div class="carousel-wrapper">
-                        <button class="carousel-btn prev" id="prevBtn">
-                            <i data-lucide="chevron-left"></i>
-                        </button>
-                        <div class="carousel-container">
-                            <div class="carousel-track" id="carouselTrack">
-                                <div class="carousel-slide active">
-                                    <img src="img/ui1.png" alt="Interfaz de Cronux-CRX - Vista 1" class="preview-screenshot">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="img/ui2.png" alt="Interfaz de Cronux-CRX - Vista 2" class="preview-screenshot">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="img/ui3.png" alt="Interfaz de Cronux-CRX - Vista 3" class="preview-screenshot">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="img/ui4.png" alt="Interfaz de Cronux-CRX - Vista 4" class="preview-screenshot">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-btn next" id="nextBtn">
-                            <i data-lucide="chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="carousel-indicators" id="carouselIndicators">
-                        <button class="indicator active" data-index="0"></button>
-                        <button class="indicator" data-index="1"></button>
-                        <button class="indicator" data-index="2"></button>
-                        <button class="indicator" data-index="3"></button>
+                    <div class="video-wrapper">
+                        <video 
+                            autoplay 
+                            loop 
+                            muted 
+                            playsinline
+                            class="preview-video">
+                            <source src="img/video.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </div>
             </div>
@@ -292,13 +278,13 @@
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Terminal</span>
-                                <button class="copy-btn" data-command="crx new mi-proyecto">
+                                <button class="copy-btn" data-command="cronux crear mi-proyecto">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx new mi-proyecto</code>
+                                <code>cronux crear mi-proyecto</code>
                             </div>
                         </div>
                         <div class="step-highlight">
@@ -306,7 +292,7 @@
                                 <i data-lucide="info"></i>
                                 <div>
                                     <strong>Resultado:</strong>
-                                    <p>✓ Proyecto inicializado<br>ID: 1.0</p>
+                                    <p>✓  Proyecto mi-proyecto creado<br>●  Versión: v1</p>
                                 </div>
                             </div>
                         </div>
@@ -331,13 +317,13 @@
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Terminal</span>
-                                <button class="copy-btn" data-command="crx save -m &quot;nueva funcionalidad&quot;">
+                                <button class="copy-btn" data-command='cronux guardar "nueva funcionalidad"'>
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx save -m "nueva funcionalidad"</code>
+                                <code>cronux guardar "nueva funcionalidad"</code>
                             </div>
                         </div>
                         <div class="step-highlight">
@@ -345,7 +331,7 @@
                                 <i data-lucide="info"></i>
                                 <div>
                                     <strong>Resultado:</strong>
-                                    <p>Guardando versión...<br>✓ Versión guardada<br>ID: 1.1</p>
+                                    <p>●  Guardando versión...<br>✓  Versión guardada: nueva funcionalidad</p>
                                 </div>
                             </div>
                         </div>
@@ -370,13 +356,13 @@
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Terminal</span>
-                                <button class="copy-btn" data-command="crx log">
+                                <button class="copy-btn" data-command="cronux historial">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx log</code>
+                                <code>cronux historial</code>
                             </div>
                         </div>
                         <div class="step-highlight">
@@ -384,7 +370,7 @@
                                 <i data-lucide="info"></i>
                                 <div>
                                     <strong>Resultado:</strong>
-                                    <p>1.1 - nueva funcionalidad<br>1.0 - Proyecto inicializado</p>
+                                    <p>v1.1  Hace 5 min  nueva funcionalidad<br>v1    Hace 1 hora  Versión inicial</p>
                                 </div>
                             </div>
                         </div>
@@ -408,13 +394,13 @@
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Terminal</span>
-                                <button class="copy-btn" data-command="crx restore 1.0">
+                                <button class="copy-btn" data-command="cronux restaurar v1">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx restore 1.0</code>
+                                <code>cronux restaurar v1</code>
                             </div>
                         </div>
                         <div class="step-highlight">
@@ -422,7 +408,7 @@
                                 <i data-lucide="check-circle"></i>
                                 <div>
                                     <strong>Resultado:</strong>
-                                    <p>✓ Restaurado a 1.0</p>
+                                    <p>✓  Versión v1 restaurada exitosamente</p>
                                 </div>
                             </div>
                         </div>
@@ -466,111 +452,6 @@
     <script>
         // Inicializar iconos de Lucide
         lucide.createIcons();
-
-        // Funcionalidad para copiar codigo
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const command = this.getAttribute('data-command');
-                const icon = this.querySelector('.copy-icon');
-                const text = this.querySelector('.copy-text');
-
-                navigator.clipboard.writeText(command).then(() => {
-                    // Cambiar a estado de éxito
-                    icon.setAttribute('data-lucide', 'check');
-                    text.textContent = '¡Copiado!';
-                    this.classList.add('copied');
-                    lucide.createIcons();
-
-                    // Volver al estado original después de 2 segundos
-                    setTimeout(() => {
-                        icon.setAttribute('data-lucide', 'copy');
-                        text.textContent = 'Copiar';
-                        this.classList.remove('copied');
-                        lucide.createIcons();
-                    }, 2000);
-                }).catch(() => {
-                    // Fallback si no se puede copiar
-                    text.textContent = 'Error';
-                    setTimeout(() => {
-                        text.textContent = 'Copiar';
-                    }, 1000);
-                });
-            });
-        });
-
-        // Carrusel de imágenes
-        const track = document.getElementById('carouselTrack');
-        const slides = document.querySelectorAll('.carousel-slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const indicators = document.querySelectorAll('.indicator');
-        let currentIndex = 0;
-        let autoplayInterval;
-
-        function updateCarousel() {
-            track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('active', index === currentIndex);
-            });
-            
-            indicators.forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentIndex);
-            });
-            
-            lucide.createIcons();
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % slides.length;
-            updateCarousel();
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            updateCarousel();
-        }
-
-        function goToSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        function startAutoplay() {
-            autoplayInterval = setInterval(nextSlide, 6000);
-        }
-
-        function stopAutoplay() {
-            clearInterval(autoplayInterval);
-        }
-
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            stopAutoplay();
-            startAutoplay();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            stopAutoplay();
-            startAutoplay();
-        });
-
-        indicators.forEach(indicator => {
-            indicator.addEventListener('click', () => {
-                goToSlide(parseInt(indicator.dataset.index));
-                stopAutoplay();
-                startAutoplay();
-            });
-        });
-
-        // Pausar autoplay al hacer hover
-        const carouselWrapper = document.querySelector('.carousel-wrapper');
-        carouselWrapper.addEventListener('mouseenter', stopAutoplay);
-        carouselWrapper.addEventListener('mouseleave', startAutoplay);
-
-        // Iniciar autoplay
-        startAutoplay();
 
         // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');

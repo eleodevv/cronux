@@ -16,8 +16,9 @@
     <header>
         <div class="navegacion">
             <div class="logo">
-                <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M16 2L26 8V24L16 30L6 24V8L16 2Z" fill="currentColor" />
+                <svg class="logo-icon" width="32" height="32" viewBox="0 0 100 100">
+                    <rect width="100" height="100" rx="28" ry="28" fill="#667EEA"/>
+                    <polygon points="50,22 72,34 72,66 50,78 28,66 28,34" fill="white"/>
                 </svg>
                 <div class="logo-text">Cronux-CRX</div>
             </div>
@@ -114,44 +115,44 @@
                 </p>
 
                 <div class="commands-grid">
-                    <!-- crx new -->
-                    <div id="crx-new" class="command-card">
+                    <!-- cronux crear -->
+                    <div id="cronux-crear" class="command-card">
                         <div class="command-header">
-                            <h3 class="command-name">crx new</h3>
+                            <h3 class="command-name">cronux crear</h3>
                             <span class="command-category">Básico</span>
                         </div>
                         <p class="command-description">
-                            Crea un nuevo proyecto con control de versiones Cronux-CRX.
+                            Crea un nuevo proyecto con control de versiones. Lanza un wizard interactivo para elegir categoría y tipo.
                         </p>
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx new [nombre-proyecto]">
+                                <button class="copy-btn" data-command="cronux crear mi-proyecto">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx new [nombre-proyecto]</code>
+                                <code>cronux crear [nombre-proyecto]</code>
                             </div>
                         </div>
                         <div class="command-examples">
                             <h4>Ejemplos:</h4>
                             <div class="example-item">
-                                <code>crx new mi-proyecto</code>
-                                <span>Crea un proyecto llamado "mi-proyecto"</span>
+                                <code>cronux crear mi-proyecto</code>
+                                <span>Crea un proyecto con wizard interactivo</span>
                             </div>
                             <div class="example-item">
-                                <code>crx new tesis-universidad</code>
-                                <span>Crea un proyecto para tu tesis</span>
+                                <code>cronux iniciar tesis-universidad</code>
+                                <span>Alias alternativo de crear</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- crx save -->
-                    <div id="crx-save" class="command-card">
+                    <!-- cronux guardar -->
+                    <div id="cronux-guardar" class="command-card">
                         <div class="command-header">
-                            <h3 class="command-name">crx save</h3>
+                            <h3 class="command-name">cronux guardar</h3>
                             <span class="command-category">Básico</span>
                         </div>
                         <p class="command-description">
@@ -160,133 +161,202 @@
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx save -m &quot;mensaje&quot;">
+                                <button class="copy-btn" data-command='cronux guardar "mensaje"'>
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx save -m "mensaje"</code>
+                                <code>cronux guardar "mensaje"</code>
                             </div>
                         </div>
                         <div class="command-examples">
                             <h4>Ejemplos:</h4>
                             <div class="example-item">
-                                <code>crx save -m "Primera versión"</code>
+                                <code>cronux guardar "Primera versión"</code>
                                 <span>Guarda con un mensaje descriptivo</span>
                             </div>
                             <div class="example-item">
-                                <code>crx save -m "Capítulo 3 terminado"</code>
+                                <code>cronux guardar "Capítulo 3 terminado"</code>
                                 <span>Ideal para proyectos académicos</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- crx log -->
-                    <div id="crx-log" class="command-card">
+                    <!-- cronux historial -->
+                    <div id="cronux-historial" class="command-card">
                         <div class="command-header">
-                            <h3 class="command-name">crx log</h3>
+                            <h3 class="command-name">cronux historial</h3>
                             <span class="command-category">Consulta</span>
                         </div>
                         <p class="command-description">
-                            Muestra el historial completo de versiones del proyecto.
+                            Muestra el historial completo de versiones del proyecto con fechas y mensajes.
                         </p>
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx log">
+                                <button class="copy-btn" data-command="cronux historial">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx log</code>
+                                <code>cronux historial</code>
                             </div>
                         </div>
                         <div class="command-examples">
                             <h4>Ejemplos:</h4>
                             <div class="example-item">
-                                <code>crx log</code>
+                                <code>cronux historial</code>
                                 <span>Muestra todas las versiones guardadas</span>
                             </div>
                             <div class="example-item">
-                                <code>crx log</code>
-                                <span>Perfecto para revisar tu progreso</span>
+                                <code>cronux log</code>
+                                <span>Alias en inglés (compatible con Git)</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- crx restore -->
-                    <div id="crx-restore" class="command-card">
+                    <!-- cronux restaurar -->
+                    <div id="cronux-restaurar" class="command-card">
                         <div class="command-header">
-                            <h3 class="command-name">crx restore</h3>
+                            <h3 class="command-name">cronux restaurar</h3>
                             <span class="command-category">Navegación</span>
                         </div>
                         <p class="command-description">
-                            Restaura el proyecto a una versión específica.
+                            Restaura el proyecto a una versión específica. Pide confirmación antes de aplicar.
                         </p>
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx restore [version]">
+                                <button class="copy-btn" data-command="cronux restaurar v1.2">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx restore [version]</code>
+                                <code>cronux restaurar [version]</code>
                             </div>
                         </div>
                         <div class="command-examples">
                             <h4>Ejemplos:</h4>
                             <div class="example-item">
-                                <code>crx restore 1.0</code>
-                                <span>Restaura a la versión 1.0</span>
+                                <code>cronux restaurar v1</code>
+                                <span>Restaura a la versión 1</span>
                             </div>
                             <div class="example-item">
-                                <code>crx restore 2.5</code>
-                                <span>Restaura a la versión 2.5</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- crx status -->
-                    <div id="crx-status" class="command-card">
-                        <div class="command-header">
-                            <h3 class="command-name">crx status</h3>
-                            <span class="command-category">Consulta</span>
-                        </div>
-                        <p class="command-description">
-                            Muestra información del proyecto actual y archivos modificados.
-                        </p>
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx status">
-                                    <i data-lucide="copy" class="copy-icon"></i>
-                                    <span class="copy-text">Copiar</span>
-                                </button>
-                            </div>
-                            <div class="code-content">
-                                <code>crx status</code>
-                            </div>
-                        </div>
-                        <div class="command-examples">
-                            <h4>Ejemplos:</h4>
-                            <div class="example-item">
-                                <code>crx status</code>
-                                <span>Muestra el estado actual del proyecto</span>
-                            </div>
-                            <div class="example-item">
-                                <code>crx status</code>
-                                <span>Ideal para revisar cambios pendientes</span>
+                                <code>cronux volver v1.2</code>
+                                <span>Alias alternativo de restaurar</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- crx --version -->
-                    <div id="crx-version" class="command-card">
+                    <!-- cronux info -->
+                    <div id="cronux-info" class="command-card">
                         <div class="command-header">
-                            <h3 class="command-name">crx --version</h3>
+                            <h3 class="command-name">cronux info</h3>
+                            <span class="command-category">Consulta</span>
+                        </div>
+                        <p class="command-description">
+                            Muestra información del proyecto: nombre, tipo, versiones y ubicación.
+                        </p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-title">Sintaxis</span>
+                                <button class="copy-btn" data-command="cronux info">
+                                    <i data-lucide="copy" class="copy-icon"></i>
+                                    <span class="copy-text">Copiar</span>
+                                </button>
+                            </div>
+                            <div class="code-content">
+                                <code>cronux info</code>
+                            </div>
+                        </div>
+                        <div class="command-examples">
+                            <h4>Ejemplos:</h4>
+                            <div class="example-item">
+                                <code>cronux info</code>
+                                <span>Muestra el estado actual del proyecto</span>
+                            </div>
+                            <div class="example-item">
+                                <code>cronux estado</code>
+                                <span>Alias alternativo de info</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- cronux eliminar -->
+                    <div id="cronux-eliminar" class="command-card">
+                        <div class="command-header">
+                            <h3 class="command-name">cronux eliminar</h3>
+                            <span class="command-category">Avanzado</span>
+                        </div>
+                        <p class="command-description">
+                            Elimina el proyecto y todas sus versiones. Pide confirmación escribiendo el nombre del proyecto.
+                        </p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-title">Sintaxis</span>
+                                <button class="copy-btn" data-command="cronux eliminar">
+                                    <i data-lucide="copy" class="copy-icon"></i>
+                                    <span class="copy-text">Copiar</span>
+                                </button>
+                            </div>
+                            <div class="code-content">
+                                <code>cronux eliminar</code>
+                            </div>
+                        </div>
+                        <div class="command-examples">
+                            <h4>Ejemplos:</h4>
+                            <div class="example-item">
+                                <code>cronux eliminar</code>
+                                <span>Elimina el proyecto actual (pide confirmación)</span>
+                            </div>
+                            <div class="example-item">
+                                <code>cronux borrar</code>
+                                <span>Alias alternativo de eliminar</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- cronux ayuda -->
+                    <div id="cronux-ayuda" class="command-card">
+                        <div class="command-header">
+                            <h3 class="command-name">cronux ayuda</h3>
+                            <span class="command-category">Ayuda</span>
+                        </div>
+                        <p class="command-description">
+                            Muestra la ayuda completa con todos los comandos disponibles y ejemplos.
+                        </p>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-title">Sintaxis</span>
+                                <button class="copy-btn" data-command="cronux ayuda">
+                                    <i data-lucide="copy" class="copy-icon"></i>
+                                    <span class="copy-text">Copiar</span>
+                                </button>
+                            </div>
+                            <div class="code-content">
+                                <code>cronux ayuda</code>
+                            </div>
+                        </div>
+                        <div class="command-examples">
+                            <h4>Aliases:</h4>
+                            <div class="example-item">
+                                <code>cronux help</code>
+                                <span>Alias en inglés</span>
+                            </div>
+                            <div class="example-item">
+                                <code>cronux --help</code>
+                                <span>Alias con flag</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- cronux --version -->
+                    <div id="cronux-version" class="command-card">
+                        <div class="command-header">
+                            <h3 class="command-name">cronux --version</h3>
                             <span class="command-category">Información</span>
                         </div>
                         <p class="command-description">
@@ -295,84 +365,20 @@
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx --version">
+                                <button class="copy-btn" data-command="cronux --version">
                                     <i data-lucide="copy" class="copy-icon"></i>
                                     <span class="copy-text">Copiar</span>
                                 </button>
                             </div>
                             <div class="code-content">
-                                <code>crx --version</code>
+                                <code>cronux --version</code>
                             </div>
                         </div>
                         <div class="command-examples">
                             <h4>Resultado:</h4>
                             <div class="example-item">
-                                <code>Cronux-CRX v0.1.0 Beta - Control de versiones local</code>
+                                <code>Cronux-CRX v0.2.0 — Control de Versiones Local</code>
                                 <span>Muestra la versión actual instalada</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- crx help -->
-                    <div id="crx-help" class="command-card">
-                        <div class="command-header">
-                            <h3 class="command-name">crx help</h3>
-                            <span class="command-category">Ayuda</span>
-                        </div>
-                        <p class="command-description">
-                            Muestra la ayuda completa con todos los comandos disponibles.
-                        </p>
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="crx help">
-                                    <i data-lucide="copy" class="copy-icon"></i>
-                                    <span class="copy-text">Copiar</span>
-                                </button>
-                            </div>
-                            <div class="code-content">
-                                <code>crx help</code>
-                            </div>
-                        </div>
-                        <div class="command-examples">
-                            <h4>Ejemplos:</h4>
-                            <div class="example-item">
-                                <code>crx help</code>
-                                <span>Muestra todos los comandos disponibles</span>
-                            </div>
-                            <div class="example-item">
-                                <code>crx help</code>
-                                <span>Perfecto cuando necesitas recordar la sintaxis</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Desinstalar -->
-                    <div id="uninstall" class="command-card">
-                        <div class="command-header">
-                            <h3 class="command-name">Desinstalar</h3>
-                            <span class="command-category">Sistema</span>
-                        </div>
-                        <p class="command-description">
-                            Elimina completamente Cronux-CRX de tu sistema (macOS/Linux).
-                        </p>
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-title">Sintaxis</span>
-                                <button class="copy-btn" data-command="sudo /usr/local/cronux/uninstall.sh">
-                                    <i data-lucide="copy" class="copy-icon"></i>
-                                    <span class="copy-text">Copiar</span>
-                                </button>
-                            </div>
-                            <div class="code-content">
-                                <code>sudo /usr/local/cronux/uninstall.sh</code>
-                            </div>
-                        </div>
-                        <div class="command-examples">
-                            <h4>Nota:</h4>
-                            <div class="example-item">
-                                <code>sudo /usr/local/cronux/uninstall.sh</code>
-                                <span>Requiere permisos de administrador</span>
                             </div>
                         </div>
                     </div>
