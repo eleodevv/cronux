@@ -114,6 +114,26 @@
                     cualquier comando directamente.
                 </p>
 
+                <!-- Nota offline/online -->
+                <div class="info-banner">
+                    <div class="info-banner-row">
+                        <div class="info-banner-item offline">
+                            <i data-lucide="wifi-off"></i>
+                            <div>
+                                <strong>100% Offline</strong>
+                                <p>Crear proyectos, guardar versiones, ver historial y restaurar funciona completamente sin internet. Tus datos nunca salen de tu computadora.</p>
+                            </div>
+                        </div>
+                        <div class="info-banner-item online">
+                            <i data-lucide="wifi"></i>
+                            <div>
+                                <strong>Requiere internet al restaurar proyectos de software</strong>
+                                <p>Al restaurar versiones de proyectos con dependencias (Node.js, Python, Go, PHP, etc.), Cronux ejecuta automáticamente el gestor de paquetes para reinstalar <code>node_modules</code>, <code>venv</code> u otras dependencias que no se guardan en las versiones.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="commands-grid">
                     <!-- cronux crear -->
                     <div id="cronux-crear" class="command-card">

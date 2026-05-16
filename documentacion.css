@@ -1170,3 +1170,83 @@ header {
         padding: 3px 8px;
     }
 }
+
+/* ── Info Banner offline/online ── */
+.info-banner {
+    margin: 0 0 2rem 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+}
+
+.info-banner-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+@media (max-width: 768px) {
+    .info-banner-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-banner-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 20px 22px;
+}
+
+.info-banner-item.offline {
+    background: #0a1628;
+    border-right: 1px solid #1e293b;
+}
+
+.info-banner-item.online {
+    background: #0d1f1a;
+}
+
+.info-banner-item i {
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 20px;
+    height: 20px;
+}
+
+.info-banner-item.offline i {
+    color: #60a5fa;
+}
+
+.info-banner-item.online i {
+    color: #34d399;
+}
+
+.info-banner-item strong {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.info-banner-item.offline strong {
+    color: #93c5fd;
+}
+
+.info-banner-item.online strong {
+    color: #6ee7b7;
+}
+
+.info-banner-item p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.info-banner-item code {
+    background: #1e293b;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    color: #e2e8f0;
+}
