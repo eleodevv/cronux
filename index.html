@@ -485,6 +485,44 @@
                 }
             });
         }
+
+        // Funcionalidad de copiar comandos
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                const command = button.getAttribute('data-command');
+                
+                try {
+                    await navigator.clipboard.writeText(command);
+                    
+                    // Cambiar el texto y el icono temporalmente
+                    const copyText = button.querySelector('.copy-text');
+                    const copyIcon = button.querySelector('.copy-icon');
+                    const originalText = copyText.textContent;
+                    
+                    copyText.textContent = 'Copiado';
+                    button.classList.add('copied');
+                    
+                    // Cambiar el icono a check
+                    copyIcon.setAttribute('data-lucide', 'check');
+                    lucide.createIcons();
+                    
+                    // Restaurar después de 2 segundos
+                    setTimeout(() => {
+                        copyText.textContent = originalText;
+                        button.classList.remove('copied');
+                        copyIcon.setAttribute('data-lucide', 'copy');
+                        lucide.createIcons();
+                    }, 2000);
+                } catch (err) {
+                    console.error('Error al copiar:', err);
+                    const copyText = button.querySelector('.copy-text');
+                    copyText.textContent = 'Error';
+                    setTimeout(() => {
+                        copyText.textContent = 'Copiar';
+                    }, 2000);
+                }
+            });
+        });
     </script>
 </body>
 
